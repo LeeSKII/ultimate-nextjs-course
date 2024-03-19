@@ -10,5 +10,20 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE_URL")
+  url      = env("MYSQL_DATABASE_URL")
+}
+
+model Issue {
+  id          Int         @id @default(autoincrement())
+  title       String      @db.VarChar(255) //default is varchar(191)
+  description String      @db.Text
+  status      IssueStatus @default(OPEN)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt //default is CURRENT_TIMESTAMP
+}
+
+enum IssueStatus {
+  OPEN
+  IN_PROGRESS
+  CLOSED
 }
