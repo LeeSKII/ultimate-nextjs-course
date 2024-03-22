@@ -1,9 +1,15 @@
-
-export default function Home() {
+import prisma from "@/lib/prisma";
+export default async function Home() {
+  const issues = await prisma.issue.findMany();
   return (
     <>
-     
-      Hello
+      {issues.map((issue) => {
+        return (
+          <div key={issue.id}>
+            {issue.title}-{issue.description}
+          </div>
+        );
+      })}
     </>
   );
 }
