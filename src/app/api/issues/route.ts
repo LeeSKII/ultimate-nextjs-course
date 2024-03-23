@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import prismaClient from "@/lib/prisma";
 
 import { issueFormSchema } from "@/tools/validate";
+import { revalidatePath } from "next/cache";
 
 export async function POST(request: NextRequest) {
   const body = await request.json();
@@ -18,6 +19,6 @@ export async function POST(request: NextRequest) {
       description,
     },
   });
-
+  revalidatePath("/issues");
   return NextResponse.json(issueCreated, { status: 201 });
 }
