@@ -18,5 +18,6 @@ export async function POST(request: NextRequest) {
       description,
     },
   });
+
   return NextResponse.json(issueCreated, { status: 201 });
 }
