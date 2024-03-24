@@ -22,3 +22,26 @@ export async function POST(request: NextRequest) {
   revalidatePath("/issues");
   return NextResponse.json(issueCreated, { status: 201 });
 }
+
+export async function PUT(request: NextRequest) {
+  const body = await request.json();
+
+  const validate = issueFormSchema.safeParse(body);
+  if (!validate.success) {
+    return NextResponse.json(validate.error.errors, { status: 400 });
+  }
+  const title = body.title;
+  const description = body.description;
+  const id = body.id;
+  const issueCreated = await prismaClient.issue.update({
+    data: {
+      title,
+      description,
+    },
+    where: {
+      id: id,
+    },
+  });
+  revalidatePath("/issues");
+  return NextResponse.json(issueCreated, { status: 201 });
+}
