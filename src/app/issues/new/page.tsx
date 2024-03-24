@@ -1,12 +1,12 @@
 "use client";
-import { Button, TextFieldRoot, TextFieldInput } from "@radix-ui/themes";
-import MDEditor from "@uiw/react-md-editor";
-import React from "react";
+import { issueFormSchema } from "@/tools/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, Controller } from "react-hook-form";
+import { Button, TextFieldInput, TextFieldRoot } from "@radix-ui/themes";
+import MDEditor from "@uiw/react-md-editor";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { issueFormSchema } from "@/tools/validate";
+import { Controller, useForm } from "react-hook-form";
+import ErrorCallout from "./ErrorCallout";
 
 type IssueForm = {
   title: string;
@@ -40,7 +40,9 @@ export default function Page() {
       <TextFieldRoot>
         <TextFieldInput {...register("title")} placeholder="Title" />
       </TextFieldRoot>
-      {errors.title?.message && <p>{errors.title?.message}</p>}
+      {errors.title?.message && (
+        <ErrorCallout>{errors.title?.message}</ErrorCallout>
+      )}
 
       {/* ref={null} to eliminate error: ele.focus is not a function  */}
       <Controller
@@ -50,7 +52,9 @@ export default function Page() {
           return <MDEditor height={500} {...field} ref={null} />;
         }}
       />
-      {errors.description?.message && <p>{errors.description?.message}</p>}
+      {errors.description?.message && (
+        <ErrorCallout>{errors.description?.message}</ErrorCallout>
+      )}
       {/* This is markdown preview */}
       {/* <MDEditor.Markdown source={value} style={{ whiteSpace: "pre-wrap" }} /> */}
 
