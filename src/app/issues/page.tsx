@@ -4,7 +4,7 @@ export default async function IssuesPage() {
   const issues = await prisma.issue.findMany();
   return (
     <>
-      <Table.Root variant="surface">
+      <Table.Root variant="surface" className="max-w-2xl">
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
