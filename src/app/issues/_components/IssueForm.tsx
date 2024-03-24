@@ -1,7 +1,12 @@
 "use client";
 import { issueFormSchema } from "@/tools/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, TextFieldInput, TextFieldRoot } from "@radix-ui/themes";
+import {
+  Button,
+  TextFieldInput,
+  TextFieldRoot,
+  Select,
+} from "@radix-ui/themes";
 import MDEditor from "@uiw/react-md-editor";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -12,6 +17,7 @@ import type { Issue } from "@prisma/client";
 
 type IssueForm = {
   title: string;
+  status?: "OPEN" | "IN_PROGRESS" | "CLOSED";
   description: string;
 };
 
@@ -23,6 +29,7 @@ export default function IssueForm({ issue }: { issue?: Issue }) {
     formState: { errors, isSubmitting },
   } = useForm<IssueForm>({
     defaultValues: issue || { title: "", description: "" },
+    // the filed registered here will be validated against the schema
     resolver: zodResolver(issueFormSchema),
   });
   const router = useRouter();
@@ -31,6 +38,7 @@ export default function IssueForm({ issue }: { issue?: Issue }) {
     <form
       className="space-y-3 max-w-xl"
       onSubmit={handleSubmit(async (data) => {
+        console.log(data);
         let response;
         if (issue) {
           response = await axios.put("/api/issues", { ...data, id: issue.id });
@@ -50,6 +58,24 @@ export default function IssueForm({ issue }: { issue?: Issue }) {
       </TextFieldRoot>
       {errors.title?.message && (
         <ErrorCallout>{errors.title?.message}</ErrorCallout>
+      )}
+      {issue && (
+        <Controller
+          name="status"
+          control={control}
+          render={({ field }) => (
+            // some time the components can't simple received the props deconstructed from field,because the props are may
+            // be not the same as the props defined in the component,so we need to use separate the props and pass them to the component
+            <Select.Root onValueChange={field.onChange} value={field.value}>
+              <Select.Trigger />
+              <Select.Content>
+                <Select.Item value="OPEN">Open</Select.Item>
+                <Select.Item value="IN_PROGRESS">In progress</Select.Item>
+                <Select.Item value="CLOSED">Done</Select.Item>
+              </Select.Content>
+            </Select.Root>
+          )}
+        ></Controller>
       )}
 
       {/* ref={null} to eliminate error: ele.focus is not a function  */}

@@ -32,11 +32,13 @@ export async function PUT(request: NextRequest) {
   }
   const title = body.title;
   const description = body.description;
+  const status = body.status;
   const id = body.id;
   const issueCreated = await prismaClient.issue.update({
     data: {
       title,
       description,
+      status,
     },
     where: {
       id: id,
