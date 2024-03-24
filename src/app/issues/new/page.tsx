@@ -47,7 +47,7 @@ export default function Page() {
         name="description"
         control={control}
         render={({ field }) => {
-          return <MDEditor {...field} ref={null} />;
+          return <MDEditor height={500} {...field} ref={null} />;
         }}
       />
       {errors.description?.message && <p>{errors.description?.message}</p>}
