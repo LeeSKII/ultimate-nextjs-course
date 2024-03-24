@@ -1,25 +1,29 @@
 "use client";
 import { issueFormSchema } from "@/tools/validate";
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { Issue } from "@prisma/client";
 import {
   Button,
+  Select,
   TextFieldInput,
   TextFieldRoot,
-  Select,
 } from "@radix-ui/themes";
 import MDEditor from "@uiw/react-md-editor";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
+import z from "zod";
 import ErrorCallout from "./ErrorCallout";
 import Spinner from "./Spinner";
-import type { Issue } from "@prisma/client";
 
-type IssueForm = {
-  title: string;
-  status?: "OPEN" | "IN_PROGRESS" | "CLOSED";
-  description: string;
-};
+// type IssueForm = {
+//   title: string;
+//   status?: "OPEN" | "IN_PROGRESS" | "CLOSED";
+//   description: string;
+// };
+
+//simplified the type of issueFormSchema to make it easier to use
+type IssueForm = z.infer<typeof issueFormSchema>;
 
 export default function IssueForm({ issue }: { issue?: Issue }) {
   const {

@@ -42,7 +42,7 @@ export default async function IssuesPage() {
         </Link>
       </div>
 
-      <Table.Root variant="surface" className="max-w-2xl">
+      <Table.Root variant="surface" className="w-full">
         <Table.Header>
           <Table.Row>
             <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
