@@ -9,13 +9,6 @@ export default async function Home() {
       <Link href="/issues/new">
         <Button>Add Issue</Button>
       </Link>
-      {issues.map((issue) => {
-        return (
-          <div key={issue.id}>
-            {issue.title}-{issue.description}
-          </div>
-        );
-      })}
     </>
   );
 }
