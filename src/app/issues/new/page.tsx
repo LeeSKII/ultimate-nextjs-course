@@ -7,6 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Controller, useForm } from "react-hook-form";
 import ErrorCallout from "./ErrorCallout";
+import Spinner from "./Spinner";
 
 type IssueForm = {
   title: string;
@@ -18,7 +19,7 @@ export default function Page() {
     register,
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<IssueForm>({
     resolver: zodResolver(issueFormSchema),
   });
@@ -28,7 +29,6 @@ export default function Page() {
     <form
       className="space-y-3 max-w-xl"
       onSubmit={handleSubmit(async (data) => {
-        console.log(data);
         const response = await axios.post("/api/issues", data);
         if (response.status === 201) {
           router.push("/issues");
@@ -58,7 +58,16 @@ export default function Page() {
       {/* This is markdown preview */}
       {/* <MDEditor.Markdown source={value} style={{ whiteSpace: "pre-wrap" }} /> */}
 
-      <Button>Submit New Issue</Button>
+      <Button disabled={isSubmitting}>
+        {isSubmitting ? (
+          <>
+            <Spinner></Spinner>
+            Submitting...
+          </>
+        ) : (
+          <>Submit New Issue</>
+        )}
+      </Button>
     </form>
   );
 }
