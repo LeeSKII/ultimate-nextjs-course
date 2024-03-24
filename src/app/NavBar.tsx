@@ -11,8 +11,8 @@ export default function NavBar() {
     { label: "Issues", href: "/issues" },
   ];
   return (
-    <div className="flex h-14 md:px-6 px-3 border-b  items-center justify-between">
-      <div className="hidden md:block">
+    <div className="flex h-14 md:px-6 px-3 border-b gap-3 items-center justify-start md:justify-between">
+      <div>
         <AiFillBug />
       </div>
       <nav>

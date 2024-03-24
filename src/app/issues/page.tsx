@@ -1,6 +1,36 @@
 import prisma from "@/lib/prisma";
-import { Table, Button } from "@radix-ui/themes";
+import type { IssueStatus } from "@prisma/client";
+import { Table, Button, Badge } from "@radix-ui/themes";
 import Link from "next/link";
+
+type IssueBadgeType = Record<
+  IssueStatus,
+  { label: string; color: "orange" | "blue" | "red" }
+>;
+
+function IssueBadge({ status }: { status: IssueStatus }) {
+  const issueBadges: IssueBadgeType = {
+    OPEN: {
+      label: "Open",
+      color: "red",
+    },
+    IN_PROGRESS: {
+      label: "In Progress",
+      color: "blue",
+    },
+    CLOSED: {
+      label: "Closed",
+      color: "orange",
+    },
+  };
+  return (
+    <>
+      <Badge color={issueBadges[status].color}>
+        {issueBadges[status].label}
+      </Badge>
+    </>
+  );
+}
 
 export default async function IssuesPage() {
   const issues = await prisma.issue.findMany();
@@ -39,7 +69,7 @@ export default async function IssuesPage() {
                   <div className="md:hidden">{issue.status}</div>
                 </Table.Cell>
                 <Table.Cell className="hidden md:table-cell">
-                  {issue.status}
+                  <IssueBadge status={issue.status} />
                 </Table.Cell>
                 <Table.Cell className="hidden md:table-cell">
                   {issue.createdAt.toDateString()}
