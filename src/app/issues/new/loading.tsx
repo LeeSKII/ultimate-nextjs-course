@@ -3,7 +3,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 export default function loading() {
   return (
-    <div className="max-w-xl">
+    <div className="w-full">
       <Skeleton className="mb-3" />
       <Skeleton count={10} />
     </div>

@@ -48,7 +48,10 @@ export default async function IssuesPage() {
       <Table.Root variant="surface" className="w-full">
         <Table.Header>
           <Table.Row>
-            <Table.ColumnHeaderCell>Title</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell>
+              <span className="md:hidden">Bug Info</span>
+              <span className="hidden md:table-cell">Title</span>
+            </Table.ColumnHeaderCell>
             <Table.ColumnHeaderCell className="hidden md:table-cell">
               Status
             </Table.ColumnHeaderCell>
@@ -63,13 +66,17 @@ export default async function IssuesPage() {
             return (
               <Table.Row key={issue.id}>
                 <Table.Cell>
-                  <Link
-                    className="text-blue-500 hover:underline hover:text-blue-700"
-                    href={`/issues/${issue.id}`}
-                  >
-                    {issue.title}
-                  </Link>
-                  <div className="md:hidden">{issue.status}</div>
+                  <div className="flex justify-between px-3 items-center gap-3">
+                    <Link
+                      className="text-blue-500 hover:underline hover:text-blue-700"
+                      href={`/issues/${issue.id}`}
+                    >
+                      {issue.title}
+                    </Link>
+                    <div className="md:hidden">
+                      <IssueBadge status={issue.status} />
+                    </div>
+                  </div>
                 </Table.Cell>
                 <Table.Cell className="hidden md:table-cell">
                   <IssueBadge status={issue.status} />
