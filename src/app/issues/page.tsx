@@ -66,7 +66,7 @@ export default async function IssuesPage() {
             return (
               <Table.Row key={issue.id}>
                 <Table.Cell>
-                  <div className="flex justify-between px-3 items-center gap-3">
+                  <div className="flex justify-between px-3 md:px-0 items-center gap-3">
                     <Link
                       className="text-blue-500 hover:underline hover:text-blue-700"
                       href={`/issues/${issue.id}`}

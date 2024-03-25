@@ -47,3 +47,17 @@ export async function PUT(request: NextRequest) {
   revalidatePath("/issues");
   return NextResponse.json(issueCreated, { status: 201 });
 }
+
+export async function DELETE(request: NextRequest) {
+  const id = Number(request.nextUrl.searchParams.get("id"));
+  console.log(id);
+  if (!id) {
+    return NextResponse.json({ message: "id is required" }, { status: 400 });
+  }
+  const issueDeleted = await prismaClient.issue.delete({ where: { id: id } });
+  if (!issueDeleted) {
+    return NextResponse.json({ message: "issue not found" }, { status: 404 });
+  }
+  revalidatePath("/issues");
+  return NextResponse.json(issueDeleted, { status: 200 });
+}

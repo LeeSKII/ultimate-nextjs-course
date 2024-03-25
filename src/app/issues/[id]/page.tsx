@@ -1,8 +1,9 @@
 import prisma from "@/lib/prisma";
 import { Button } from "@radix-ui/themes";
-import { notFound, redirect } from "next/navigation";
-import MDPreview from "./MDPreview";
 import Link from "next/link";
+import { notFound, redirect } from "next/navigation";
+import DeleteButton from "./DeleteButton";
+import MDPreview from "./MDPreview";
 
 type Props = {
   params: {
@@ -25,6 +26,7 @@ export default async function Page({ params }: Props) {
         <Link href={`/issues/${params.id}/edit`}>
           <Button>Edit</Button>
         </Link>
+        <DeleteButton issueId={Number(params.id)} />
         <form
           action={async (data: FormData) => {
             "use server";
