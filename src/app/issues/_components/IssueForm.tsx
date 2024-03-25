@@ -33,14 +33,14 @@ export default function IssueForm({ issue }: { issue?: Issue }) {
     formState: { errors, isSubmitting },
   } = useForm<IssueForm>({
     defaultValues: issue || { title: "", description: "" },
-    // the filed registered here will be validated against the schema
+    // the filed registered here will be validated against the schema,not the IssueForm type
     resolver: zodResolver(issueFormSchema),
   });
   const router = useRouter();
 
   return (
     <form
-      className="space-y-3 max-w-xl"
+      className="space-y-3"
       onSubmit={handleSubmit(async (data) => {
         console.log(data);
         let response;

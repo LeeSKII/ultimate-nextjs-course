@@ -36,9 +36,12 @@ export default async function IssuesPage() {
   const issues = await prisma.issue.findMany();
   return (
     <>
-      <div className="mb-3">
+      <div className="mb-3 space-x-3">
         <Link href="/issues/new">
           <Button>Add Issue</Button>
+        </Link>
+        <Link href="/issues/raw-new">
+          <Button>Add Use Simple MD</Button>
         </Link>
       </div>
 
