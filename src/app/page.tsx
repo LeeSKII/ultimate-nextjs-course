@@ -1,14 +1,15 @@
-import prisma from "@/lib/prisma";
+import { auth } from "@/lib/auth";
 import { Button } from "@radix-ui/themes";
-import Link from "next/link";
 
 export default async function Home() {
-  const issues = await prisma.issue.findMany();
+  const session = await auth();
   return (
     <>
-      <Link href="/issues/new">
-        <Button>Add Issue</Button>
-      </Link>
+      <p>Welcome {session && session?.user?.name}!</p>
+      <p>Id {session && session?.user?.id}!</p>
+      <form action="">
+        <Button>Button</Button>
+      </form>
     </>
   );
 }
