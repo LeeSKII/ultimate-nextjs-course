@@ -1,8 +1,8 @@
 "use client";
-import Link from "next/link";
-import { AiFillBug } from "react-icons/ai";
-import { usePathname } from "next/navigation";
 import classNames from "classnames";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { AiFillBug } from "react-icons/ai";
 
 export default function NavBar() {
   const pathname = usePathname();
